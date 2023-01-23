@@ -1,6 +1,5 @@
-import { createStyles, Flex, Box, Tabs, Container, Breadcrumbs, Title } from '@mantine/core';
-import { ExamNavbar } from '../ExamNavbar';
-import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
+import { createStyles, Tabs } from '@mantine/core';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     tabs: {
@@ -24,10 +23,12 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export default function Exam() {
+export default function Course() {
+    const { classes } = useStyles();
     const navigate = useNavigate();
     const { courseId } = useParams();
-    const { classes } = useStyles();
+    const { pathname } = useLocation();
+    const pathnameArr = pathname.split('/');
 
     const handleTabNavigation = (value: string) => {
         if (value === 'info') {
@@ -39,7 +40,7 @@ export default function Exam() {
 
     return (
         <Tabs
-            defaultValue={'info'}
+            defaultValue={pathnameArr[3] || 'info'}
             onTabChange={handleTabNavigation}
             variant="outline"
             classNames={{
