@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@8base/auth": "^1.6.2",
     "@emotion/react": "^11.10.5",
     "@mantine/core": "^5.10.1",
     "@mantine/hooks": "^5.10.1",
@@ -17,6 +18,8 @@
     "@tiptap/extension-link": "^2.0.0-beta.209",
     "@tiptap/react": "^2.0.0-beta.209",
     "@tiptap/starter-kit": "^2.0.0-beta.209",
+    "@urql/exchange-graphcache": "^5.0.8",
+    "graphql": "^16.6.0",
     "prosemirror-commands": "^1.5.0",
     "prosemirror-dropcursor": "^1.6.1",
     "prosemirror-gapcursor": "^1.3.1",
@@ -25,7 +28,9 @@
     "prosemirror-schema-list": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.0",
     "react-router-dom": "^6.7.0",
+    "urql": "^3.0.3",
     "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {

@@ -1,10 +1,12 @@
-import { Container, Tabs, Title } from "@mantine/core";
-import { ContentWithSidebar } from "../ContentWithSidebar";
-import { Block } from "../components/blocks/Block";
+import { Container, Title } from "@mantine/core";
+import { ContentWithSidebar } from "../../ContentWithSidebar";
+import { Block } from "../../components/blocks/Block";
+import { CourseTabs } from "./CourseTabs";
 
-export default function PagesTabPanel() {
+export default function Pages() {
     return (
-        <Tabs.Panel value="pages">
+        <>
+            
             <ContentWithSidebar>
                 <Container size={'xl'} mt={'lg'}>
                     <Title order={1} mb={'lg'}>Mathematik</Title>
@@ -14,6 +16,6 @@ export default function PagesTabPanel() {
                     <Block />
                 </Container>
             </ContentWithSidebar>
-        </Tabs.Panel>
+        </>
     );
 }

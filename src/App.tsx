@@ -4,14 +4,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { MantineProvider } from '@mantine/core';
-import Home from './routes/Home';
-import Course from './routes/Course';
 import Root from "./routes/Root";
-import InfoTabPanel from "./routes/InfoTabPanel";
-import PagesTabPanel from "./routes/PagesTabPanel";
-import StudentsTabPanel from "./routes/StudentsTabPanel";
-import NewCourse from "./routes/NewCourse";
-import EditCourse from "./routes/EditCourse";
+import Home from './routes/Home';
+import Course from './routes/courses/Course';
+import Infos from "./routes/courses/Infos";
+import Pages from "./routes/courses/Pages";
+import Students from "./routes/courses/Students";
+import New from "./routes/courses/New";
+import Edit from "./routes/courses/Edit";
+import { createClient, Provider as UrqlProvider, debugExchange, fetchExchange } from "urql";
+import { cacheExchange } from '@urql/exchange-graphcache';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'courses/new',
-        element: <NewCourse />,
+        element: <New />,
       },
       {
         path: 'courses/:courseId',
@@ -32,19 +34,19 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <InfoTabPanel />,
+            element: <Infos />,
           },
           {
             path: 'pages',
-            element: <PagesTabPanel />,
+            element: <Pages />,
           },
           {
             path: 'students',
-            element: <StudentsTabPanel />,
+            element: <Students />,
           },
           {
             path: 'edit',
-            element: <EditCourse />,
+            element: <Edit />,
           }
         ]
       }
@@ -52,11 +54,24 @@ const router = createBrowserRouter([
   }
 ]);
 
+
+const client = createClient({
+  url: import.meta.env.VITE_APP_WORKSPACE_ENDPOINT,
+  exchanges: [
+    debugExchange,
+    cacheExchange({}),
+    fetchExchange,
+  ],
+});
+
+
 export default function App() {
 
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
-      <RouterProvider router={router} />
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={{ primaryColor: 'pink', primaryShade: 7 }}>
+      <UrqlProvider value={client}>
+        <RouterProvider router={router} />
+      </UrqlProvider>
     </MantineProvider>
   );
 }

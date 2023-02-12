@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Badge, Box, Button, Card, Container, createStyles, Flex, Group, Header as MantineHeader, MantineProvider, Menu, SegmentedControl, SimpleGrid, Text, TextInput, UnstyledButton, useMantineTheme } from '@mantine/core';
+import { Container, createStyles, Flex, Group, Header as MantineHeader, Menu, Text, UnstyledButton } from '@mantine/core';
 import { IconChevronDown, IconHeart, IconStar, IconMessage, IconSettings, IconSwitchHorizontal, IconLogout, IconUser } from '@tabler/icons';
 import { Link } from 'react-router-dom';
 
@@ -48,13 +48,14 @@ export const Header = () => {
     const { classes, theme, cx } = useStyles();
 
     return (
-        <MantineHeader height={60} withBorder={false} style={{ backgroundColor: theme.colors.gray[1] }}>
+        <MantineHeader height={60} withBorder={false} style={{ backgroundColor: theme.colors.gray[0] }}>
             <Container size={'xl'}>
                 <Flex style={{ height: 60 }} align={'center'} justify={'space-between'}>
                     <Text
                         component={Link}
                         to={'/'}
                         size={'lg'}
+                        weight={600}
                     >
                         SmartLab
                     </Text>

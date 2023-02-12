@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { ActionIcon, Badge, Box, Button, Card, Container, createStyles, Flex, Group, Header, MantineProvider, Menu, SegmentedControl, SimpleGrid, Text, TextInput, Title, UnstyledButton, useMantineTheme } from '@mantine/core';
-import { Link } from 'react-router-dom';
-import { IconArrowRight, IconSearch } from '@tabler/icons';
+import { Suspense } from 'react';
+import { Box, Container, createStyles, Loader } from '@mantine/core';
+import { CourseFilterForm } from '../components/CourseFilterForm';
+import { CourseList } from '../components/CourseList';
 
 const useStyles = createStyles((theme) => ({
     header: {
@@ -48,73 +48,14 @@ export default function HomePage() {
 
     return (
         <>
-            <Box style={{ height: 64, backgroundColor: theme.colors.gray[1] }}></Box>
+            <Box style={{ height: 64, backgroundColor: theme.colors.gray[0] }}></Box>
             <Container>
-                <Card
-                    withBorder
-                    p={'md'}
-                    radius={'lg'}
-                    shadow={'sm'}
-                    mt={-56}
-                >
-                    <Flex justify={'space-between'} align={'center'} mb={'md'}>
-                        <Title order={3}>Kurse</Title>
-                        <Button
-                            component={Link}
-                            to={'/courses/new'}
-                            variant="subtle"
-                        >
-                            Erstellen
-                        </Button>
-                    </Flex>
-                    <TextInput
-                        icon={<IconSearch size={18} stroke={1.5} />}
-                        radius="xl"
-                        size="md"
-                        rightSection={
-                            <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-                                <IconArrowRight size={18} stroke={1.5} />
-                            </ActionIcon>
-                        }
-                        placeholder="Kurse suchen"
-                        rightSectionWidth={42}
-                    />
-                    <Flex justify={'space-between'} mt={16}>
-                        <SegmentedControl
-                            data={[
-                                { label: 'Lernumgebung', value: 'react' },
-                                { label: 'Prüfung', value: 'ng' },
-                            ]}
-                        />
-                    </Flex>
-                </Card>
+                <CourseFilterForm />
             </Container>
             <Container size={'xl'}>
-                <SimpleGrid cols={3} spacing="md" mt={56}>
-                    <Card withBorder radius={'md'}>
-                        <Group position="right">
-                            <Badge>aktiv</Badge>
-                        </Group>
-                        <Text color={'dimmed'} size={'xs'} weight={700} tt={'uppercase'}>Kurs</Text>
-                        <Text weight={600}>Math</Text>
-                        <Text color={'dimmed'} size={'sm'}>Module 000</Text>
-                        <Flex justify={'flex-end'}>
-                            <Button
-                                component={Link}
-                                to={'/courses/1'}
-                                variant="subtle"
-                                mt={'md'}
-                            >
-                                Anzeigen
-                            </Button>
-                        </Flex>
-                    </Card>
-                    <Card withBorder radius={'md'}>
-                        <Text weight={600}>Durchführung</Text>
-                        <Text>Deutsch</Text>
-                        <Text>Module 000</Text>
-                    </Card>
-                </SimpleGrid>
+                <Suspense fallback={<Loader />}>
+                    <CourseList />
+                </Suspense>
             </Container>
         </>
     );
