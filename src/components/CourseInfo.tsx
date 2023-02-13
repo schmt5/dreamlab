@@ -1,15 +1,16 @@
 import { Box, Button, Grid, Text, Title } from "@mantine/core";
 import { Link, useParams } from "react-router-dom";
-import { useCourseById } from "./hooks/queries/use-course-by-id-query";
+import { useQuery } from "urql";
+import { CourseByIdQuery } from "../urql/queries/courseByIdQuery";
 
 export const CourseInfo = () => {
     const { courseId } = useParams();
-    const { data } = useCourseById(courseId!);
+    const [{ data }] = useQuery({ query: CourseByIdQuery, variables: { id: courseId } })
 
     return (
         <>
             <Title order={1} mb={'lg'}>
-                {data?.name}
+                {data?.course.name}
             </Title>
             <Box maw={720}>
                 <Title order={2}>Kursinfos</Title>
@@ -19,7 +20,7 @@ export const CourseInfo = () => {
                     </Grid.Col>
                     <Grid.Col span={9}>
                         <Text>
-                            {data?.name}
+                            {data?.course.name}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={3}>
@@ -27,7 +28,7 @@ export const CourseInfo = () => {
                     </Grid.Col>
                     <Grid.Col span={9}>
                         <Text>
-                            {data?.description}
+                            {data?.course.description}
                         </Text>
                     </Grid.Col>
                 </Grid>
@@ -35,7 +36,7 @@ export const CourseInfo = () => {
                     variant="filled"
                     component={Link}
                     to={`/courses/${courseId}/edit`}
-                    state={{ id: data?.id, name: data?.name, description: data?.description }}
+                    state={{ id: data?.course.id, name: data?.course.name, description: data?.course.description }}
                 >
                     Editieren
                 </Button>

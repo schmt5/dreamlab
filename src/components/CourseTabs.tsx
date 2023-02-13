@@ -1,5 +1,7 @@
 import { Box, createStyles } from "@mantine/core"
 import { Link, useLocation, useParams } from "react-router-dom"
+import { useQuery } from "urql";
+import { CourseByIdQuery } from "../urql/queries/courseByIdQuery";
 
 const useStyles = createStyles((theme) => ({
     list: {
@@ -25,9 +27,10 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export const CourseTabs = () => {
+    const { classes, cx } = useStyles();
     const { courseId } = useParams();
     const { pathname } = useLocation();
-    const { classes, cx } = useStyles();
+    const [{ data }] = useQuery({ query: CourseByIdQuery, variables: { id: courseId } });
 
     const courseSecton = pathname.split('/')[3];
 
@@ -40,7 +43,7 @@ export const CourseTabs = () => {
                 Info
             </Link>
             <Link
-                to={`/courses/${courseId}/pages`}
+                to={`/courses/${courseId}/pages/${data?.course.pages.items[0].id}`}
                 className={cx(classes.link, courseSecton === 'pages' && classes.link_active)}
             >
                 Seiten

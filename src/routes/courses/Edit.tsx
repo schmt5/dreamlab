@@ -1,8 +1,8 @@
 import { Button, Container, Flex, Textarea, TextInput, Title } from "@mantine/core";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useUpdateCourseMutation } from "../../components/hooks/mutations/use-update-course-mutation";
-
+import { useMutation } from "urql";
+import { CourseUpdateMutation } from "../../urql/mutations/courseUpdateMutation";
 
 type FormValues = {
     name: string;
@@ -12,7 +12,7 @@ type FormValues = {
 export default function Edit() {
     const { state } = useLocation();
     const navigate = useNavigate();
-    const { mutate: updateCourse, isLoading } = useUpdateCourseMutation();
+    const [{ fetching }, updateCourse] = useMutation(CourseUpdateMutation);
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         defaultValues: {
             name: state.name ?? '',
@@ -20,18 +20,13 @@ export default function Edit() {
         },
     });
 
-    const onSubmit = (data: FormValues) => {
-        updateCourse({
-            id: state.id,
-            name: data.name,
-            description: data.description,
-        }, {
-            onSuccess: () => {
-                navigate(`/courses/${state.id}`, {
-                    replace: true,
-                });
-            }
-        });
+    const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+        const inputData = { data: { id: state.id, ...data } }
+        const updatedCourse = await updateCourse(inputData);
+
+        if (updatedCourse.data) {
+            navigate(`/courses/${updatedCourse.data.courseUpdate.id}`);
+        }
     }
 
     return (
@@ -41,6 +36,7 @@ export default function Edit() {
                     <Title order={2} mb={'xl'}>Kurs editieren</Title>
                     <TextInput
                         {...register('name', { required: 'Bitte Kursname eingeben' })}
+                        error={errors.name?.message}
                         withAsterisk
                         label="Kurstitel"
                         placeholder="Mathematik"
@@ -56,14 +52,14 @@ export default function Edit() {
                             variant="subtle"
                             component={Link}
                             to={'..'}
-                            disabled={isLoading}
+                            disabled={fetching}
                         >
                             Abbrechen
                         </Button>
                         <Button
                             variant="filled"
                             type="submit"
-                            loading={isLoading}
+                            loading={fetching}
                         >
                             Speichern
                         </Button>

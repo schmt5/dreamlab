@@ -1,27 +1,14 @@
 import { SimpleGrid } from "@mantine/core";
 import { CourseTeaser } from "./CourseTeaser";
 import { useQuery } from "urql";
-
-const CoursesQuery = `
-  query {
-    coursesList {
-      items {
-        id
-        name
-        description
-      }
-    }
-  }
-`;
+import { CoursesQuery } from "../urql/queries/coursesQuery";
 
 export const CourseList = () => {
-  const [query] = useQuery({ query: CoursesQuery });
-
-  console.log(query);
+  const [{ data }] = useQuery({ query: CoursesQuery });
 
   return (
     <SimpleGrid cols={3} spacing="md" mt={56}>
-      {query?.data?.map((course: any) => (
+      {data?.coursesList.items.map((course: any) => (
         <CourseTeaser
           key={course.id}
           id={course.id}

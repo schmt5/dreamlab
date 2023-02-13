@@ -8,7 +8,7 @@ import Root from "./routes/Root";
 import Home from './routes/Home';
 import Course from './routes/courses/Course';
 import Infos from "./routes/courses/Infos";
-import Pages from "./routes/courses/Pages";
+import Page from "./routes/courses/Page";
 import Students from "./routes/courses/Students";
 import New from "./routes/courses/New";
 import Edit from "./routes/courses/Edit";
@@ -37,8 +37,8 @@ const router = createBrowserRouter([
             element: <Infos />,
           },
           {
-            path: 'pages',
-            element: <Pages />,
+            path: 'pages/:pageId',
+            element: <Page />,
           },
           {
             path: 'students',
@@ -57,11 +57,14 @@ const router = createBrowserRouter([
 
 const client = createClient({
   url: import.meta.env.VITE_APP_WORKSPACE_ENDPOINT,
-  exchanges: [
-    debugExchange,
-    cacheExchange({}),
-    fetchExchange,
-  ],
+  fetchOptions: () => {
+    const token = null;
+    return {
+      headers: { authorization: token ? `Bearer ${token}` : '' }
+    }
+  },
+  exchanges: [debugExchange, cacheExchange({}), fetchExchange],
+  suspense: true,
 });
 
 

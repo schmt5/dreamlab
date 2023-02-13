@@ -1,16 +1,21 @@
 import { Box } from "@mantine/core";
+import { JSONContent } from "@tiptap/react";
 import { useRef, useState } from "react";
-import { useOnClickOutside } from "usehooks-ts";
+import { useHover, useOnClickOutside } from "usehooks-ts";
 import { RichTextBlock } from "./RichTextBlock/RichTextBlock";
 
-export const Block = () => {
+interface BlockProps {
+    id: string;
+    content: JSONContent;
+}
+
+export const Block = ({ id, content }: BlockProps) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isFocused, setIsFocused] = useState(false);
+    const isHover = useHover(ref);
 
     const handleClickOutside = () => {
         setIsFocused(false);
-
-        
     }
 
     const handleClickInside = () => {
@@ -35,7 +40,11 @@ export const Block = () => {
 
             })}
         >
-            <RichTextBlock editable={isFocused} />
+            <RichTextBlock
+                id={id}
+                editorContent={content}
+                editable={isFocused || isHover}
+            />
         </Box>
     )
 };
