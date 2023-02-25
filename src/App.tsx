@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { simplePagination } from '@urql/exchange-graphcache/extras';
 import { MantineProvider } from '@mantine/core';
 import Root from "./routes/Root";
 import Home from './routes/Home';
@@ -57,14 +58,20 @@ const router = createBrowserRouter([
 
 const client = createClient({
   url: import.meta.env.VITE_APP_WORKSPACE_ENDPOINT,
-  fetchOptions: () => {
-    const token = null;
-    return {
-      headers: { authorization: token ? `Bearer ${token}` : '' }
-    }
-  },
-  exchanges: [debugExchange, cacheExchange({}), fetchExchange],
+  exchanges: [debugExchange, cacheExchange({
+    keys: {
+      CourseListResponse: () => null,
+    },
+    updates: {
+      Mutation: {
+        blockCreate: (result, args, cache, info) => {
+          cache.invalidate('Query', 'blocksList', { pageId: args.pageId });
+        }
+      },
+    },
+  }), fetchExchange],
   suspense: true,
+  requestPolicy: 'cache-and-network',
 });
 
 

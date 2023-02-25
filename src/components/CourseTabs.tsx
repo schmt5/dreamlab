@@ -10,6 +10,7 @@ const useStyles = createStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: theme.colors.gray[0],
+        height: 46,
     },
     link: {
         fontWeight: 500,

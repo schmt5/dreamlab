@@ -15,6 +15,13 @@ const useStyles = createStyles((theme) => ({
         padding: 8,
         gap: 8,
         borderColor: theme.colors.gray[8],
+        opacity: 0,
+        transition: 'opacity 100ms ease-out',
+    },
+
+    toolbar_active: {
+        opacity: 1,
+        transition: 'opacity 50ms ease-in',
     },
     control: {
         border: 'none',
@@ -32,7 +39,7 @@ interface RichTextBlockProps {
 }
 
 export const RichTextBlock = ({ id, editorContent, editable = true }: RichTextBlockProps) => {
-    const { classes } = useStyles();
+    const { classes, cx } = useStyles();
     const [{ fetching }, updateBlock] = useMutation(BlockUpdateMutation);
     const [content, setContent] = useState<JSONContent>(editorContent)
     const debouncedContent = useDebounce<JSONContent>(content, 500);
@@ -58,37 +65,30 @@ export const RichTextBlock = ({ id, editorContent, editable = true }: RichTextBl
             editor={editor}
             classNames={{
                 root: classes.root,
-                toolbar: classes.toolbar,
+                toolbar: cx(classes.toolbar, { [classes.toolbar_active]: editable }),
                 control: classes.control,
             }}
         >
             <Box sx={{ height: 43 }}>
-                <Transition mounted={editable} transition="fade" duration={50} timingFunction="ease">
-                    {(styles) => (
-                        <div style={styles}>
-                            <RichTextEditor.Toolbar sticky>
-                                <RichTextEditor.ControlsGroup>
-                                    <RichTextEditor.Bold />
-                                    <RichTextEditor.Italic />
-                                    <RichTextEditor.Underline />
-                                    <RichTextEditor.Code />
-                                </RichTextEditor.ControlsGroup>
-                                <Divider orientation="vertical" />
-                                <RichTextEditor.ControlsGroup>
-                                    <RichTextEditor.BulletList />
-                                    <RichTextEditor.OrderedList />
-                                </RichTextEditor.ControlsGroup>
-                                <Divider orientation="vertical" />
-                                <RichTextEditor.ControlsGroup>
-                                    <RichTextEditor.Link />
-                                    <RichTextEditor.Unlink />
-                                </RichTextEditor.ControlsGroup>
-                            </RichTextEditor.Toolbar>
-                        </div>
-                    )}
-                </Transition>
+                <RichTextEditor.Toolbar sticky>
+                    <RichTextEditor.ControlsGroup>
+                        <RichTextEditor.Bold />
+                        <RichTextEditor.Italic />
+                        <RichTextEditor.Underline />
+                        <RichTextEditor.Code />
+                    </RichTextEditor.ControlsGroup>
+                    <Divider orientation="vertical" />
+                    <RichTextEditor.ControlsGroup>
+                        <RichTextEditor.BulletList />
+                        <RichTextEditor.OrderedList />
+                    </RichTextEditor.ControlsGroup>
+                    <Divider orientation="vertical" />
+                    <RichTextEditor.ControlsGroup>
+                        <RichTextEditor.Link />
+                        <RichTextEditor.Unlink />
+                    </RichTextEditor.ControlsGroup>
+                </RichTextEditor.Toolbar>
             </Box>
-
             <RichTextEditor.Content />
         </RichTextEditor>
     );

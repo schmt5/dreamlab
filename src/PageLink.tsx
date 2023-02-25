@@ -1,6 +1,6 @@
 import { createStyles, Text, Tooltip } from "@mantine/core";
 import { IconFile } from "@tabler/icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const useStyles = createStyles((theme, _params, getRef) => {
     const icon = getRef('icon') as any;
@@ -49,8 +49,8 @@ interface PageLinkProps {
 }
 
 export const PageLink = ({ id, name, isSidebarOpen }: PageLinkProps) => {
+    const { courseId, pageId: currentPageId } = useParams();
     const { classes, cx } = useStyles();
-    const isActive = false;
 
     return (
         <Tooltip
@@ -60,8 +60,8 @@ export const PageLink = ({ id, name, isSidebarOpen }: PageLinkProps) => {
             opened={isSidebarOpen ? false : undefined}
         >
             <Link
-                to={`${id}`}
-                className={cx(classes.link, { [classes.linkActive]: isActive })}
+                to={`/courses/${courseId}/pages/${id}`}
+                className={cx(classes.link, { [classes.linkActive]: id === currentPageId })}
             >
                 <IconFile className={classes.linkIcon} />
                 <Text sx={{ display: isSidebarOpen ? undefined : 'none', whiteSpace: 'nowrap' }}>

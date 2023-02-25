@@ -30,7 +30,7 @@ export default function New() {
 
         if (!newCourse.data || !newPage.data) return;
 
-        navigate(`/courses/${newCourse.data.courseCreate.id}/pages${newPage.data.pageCreate.id}`);
+        navigate(`/courses/${newCourse.data.courseCreate.id}/pages/${newPage.data.pageCreate.id}`);
     }
 
     return (
