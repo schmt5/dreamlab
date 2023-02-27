@@ -1,7 +1,7 @@
 import { Box, Flex, Paper } from "@mantine/core";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "urql";
+import { useLocalStorage } from "usehooks-ts";
 import { PageNavCreate } from "./components/pages/PageNavCreate";
 import { PageNavToggle } from "./components/pages/PageNavToggle";
 import { PageLink } from "./PageLink";
@@ -12,11 +12,11 @@ interface ContentWithSidebarProps {
 }
 
 export const ContentWithSidebar = ({ children }: ContentWithSidebarProps) => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useLocalStorage('sidebarOpen', true);
     const { courseId } = useParams();
     const [{ data }] = useQuery({ query: PagesByCourseQuery, variables: { courseId } });
 
-    const toggleOpen = () => setOpen(!open);
+    const toggleOpen = () => setOpen(prevState => !prevState);
 
     return (
         <Flex gap={'lg'}>
