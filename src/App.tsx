@@ -3,7 +3,6 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { simplePagination } from '@urql/exchange-graphcache/extras';
 import { MantineProvider } from '@mantine/core';
 import Root from "./routes/Root";
 import Home from './routes/Home';
@@ -13,8 +12,8 @@ import Page from "./routes/courses/Page";
 import Students from "./routes/courses/Students";
 import New from "./routes/courses/New";
 import Edit from "./routes/courses/Edit";
-import { createClient, Provider as UrqlProvider, debugExchange, fetchExchange } from "urql";
-import { cacheExchange } from '@urql/exchange-graphcache';
+import { Provider as UrqlProvider } from "urql";
+import { client } from "./urql/client";
 
 const router = createBrowserRouter([
   {
@@ -56,23 +55,7 @@ const router = createBrowserRouter([
 ]);
 
 
-const client = createClient({
-  url: import.meta.env.VITE_APP_WORKSPACE_ENDPOINT,
-  exchanges: [debugExchange, cacheExchange({
-    keys: {
-      CourseListResponse: () => null,
-    },
-    updates: {
-      Mutation: {
-        blockCreate: (result, args, cache, info) => {
-          cache.invalidate('Query', 'blocksList', { pageId: args.pageId });
-        }
-      },
-    },
-  }), fetchExchange],
-  suspense: true,
-  requestPolicy: 'cache-and-network',
-});
+
 
 
 export default function App() {

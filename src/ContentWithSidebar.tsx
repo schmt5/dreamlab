@@ -1,12 +1,11 @@
-import { ActionIcon, Box, Button, Center, Flex, Paper, Text, Tooltip } from "@mantine/core";
-import { IconLayoutSidebar, IconPlus } from "@tabler/icons";
+import { Box, Flex, Paper } from "@mantine/core";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "urql";
 import { PageNavCreate } from "./components/pages/PageNavCreate";
 import { PageNavToggle } from "./components/pages/PageNavToggle";
 import { PageLink } from "./PageLink";
-import { PagesByCourseIdQuery } from "./urql/queries/pagesByCourseIdQuery";
+import { PagesByCourseQuery } from "./urql/queries/pagesByCourseQuery";
 
 interface ContentWithSidebarProps {
     children: React.ReactNode;
@@ -15,7 +14,7 @@ interface ContentWithSidebarProps {
 export const ContentWithSidebar = ({ children }: ContentWithSidebarProps) => {
     const [open, setOpen] = useState(false);
     const { courseId } = useParams();
-    const [{ data }] = useQuery({ query: PagesByCourseIdQuery, variables: { courseId } });
+    const [{ data }] = useQuery({ query: PagesByCourseQuery, variables: { courseId } });
 
     const toggleOpen = () => setOpen(!open);
 

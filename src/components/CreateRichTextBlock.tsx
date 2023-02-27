@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery } from "urql";
 import { BlockCreateMutation } from "../urql/mutations/blockCreateMutation";
-import { BlocksByPageIdQuery } from "../urql/queries/blocksByPageIdQuery";
+import { BlocksByPageQuery } from "../urql/queries/blocksByPageQuery";
 
 type FormValues = {
     canStudentEdit: boolean;
@@ -15,7 +15,7 @@ interface CreateRichTextBlockProps {
 
 export const CreateRichTextBlock = ({ onClose }: CreateRichTextBlockProps) => {
     const { pageId } = useParams();
-    const [{ data: pageData }] = useQuery({ query: BlocksByPageIdQuery, variables: { pageId } })
+    const [{ data: blocksData }] = useQuery({ query: BlocksByPageQuery, variables: { pageId } })
     const [{ fetching }, createBlock] = useMutation(BlockCreateMutation)
     const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
@@ -24,7 +24,7 @@ export const CreateRichTextBlock = ({ onClose }: CreateRichTextBlockProps) => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        const blockData = { data: { pagesId: pageId, position: pageData?.page.blocks.count, ...data } }
+        const blockData = { data: { pagesId: pageId, position: blocksData?.blocksList.count, ...data } }
         const newBlock = await createBlock(blockData);
         if (!newBlock.data) return;
 

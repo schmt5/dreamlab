@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 
-export const PagesByCourseIdQuery = gql`
-    query PagesByCourseIdQuery($courseId: String!) {
+export const PagesByCourseQuery = gql`
+    query PagesByCourseQuery($courseId: String!) {
         pagesList(filter: { coursesId: { equals: $courseId } }) {
+            __typename
             count
             items {
-            id
-            name
+                id
+                name
             }
         }
     }

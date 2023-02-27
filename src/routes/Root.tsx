@@ -13,7 +13,6 @@ export default function Root() {
         };
 
         const token = checkAuth();
-        console.log(token);
     }, []);
 
 

@@ -18,7 +18,7 @@ export const CreatePageDrawer = ({ open, onClose, pageCount }: CreatePageDrawerP
     const { courseId } = useParams();
     const navigate = useNavigate();
     const [{ fetching }, createPage] = useMutation(PageCreateMutation);
-    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
         defaultValues: {
             name: '',
         },
@@ -29,6 +29,8 @@ export const CreatePageDrawer = ({ open, onClose, pageCount }: CreatePageDrawerP
         const newPage = await createPage(pageData);
 
         if (!newPage.data) return;
+        reset();
+        onClose();
         navigate(`/courses/${courseId}/pages/${newPage.data.pageCreate.id}`)
     }
 
