@@ -15,7 +15,7 @@ export const PageHeader = () => {
         <>
             <Flex justify={'space-between'} align={'center'} mb={'lg'}>
                 <Title order={2} mb={'lg'}>
-                    {data?.page.courses.name} - {data?.page.name}
+                    {data?.page.name}
                 </Title>
                 <Flex>
                     <Button

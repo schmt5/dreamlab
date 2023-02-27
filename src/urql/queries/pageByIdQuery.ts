@@ -5,10 +5,6 @@ export const PageByIdQuery = gql`
         page(id: $id) {
             id
             name
-            courses {
-                id
-                name
-            }
         }
     }
 `;

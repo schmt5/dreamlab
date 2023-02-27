@@ -9,9 +9,6 @@ export const CourseInfo = () => {
 
     return (
         <>
-            <Title order={1} mb={'lg'}>
-                {data?.course.name}
-            </Title>
             <Box maw={720}>
                 <Title order={2}>Kursinfos</Title>
                 <Grid mt={'sm'} mb={'lg'}>
