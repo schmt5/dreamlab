@@ -1,5 +1,5 @@
 import { createStyles, Container, Group, ActionIcon, Text } from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons';
+import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 
 const useStyles = createStyles((theme) => ({
   footer: {

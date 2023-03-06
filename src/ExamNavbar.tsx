@@ -1,14 +1,13 @@
 import { useState } from 'react';
-import { createStyles, Navbar, Group, Burger, Tooltip, UnstyledButton } from '@mantine/core';
+import { createStyles, getStylesRef, Navbar, Group, Burger, Tooltip, UnstyledButton } from '@mantine/core';
 import {
-  TablerIcon,
   IconFile,
-} from '@tabler/icons';
+} from '@tabler/icons-react';
 import { pages } from './db/data';
 
 
-const useStyles = createStyles((theme, _params, getRef) => {
-  const icon = getRef('icon') as any;
+const useStyles = createStyles((theme) => {
+  const icon = getStylesRef('icon') as any;
   return {
     header: {
       paddingBottom: theme.spacing.md,
@@ -77,7 +76,7 @@ const useStyles = createStyles((theme, _params, getRef) => {
 
 
 interface NavbarLinkProps {
-  icon: TablerIcon;
+  icon: any;
   label: string;
   active?: boolean;
   onClick?(): void;

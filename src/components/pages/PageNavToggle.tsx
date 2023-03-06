@@ -1,5 +1,5 @@
 import { ActionIcon, Flex, Tooltip } from "@mantine/core";
-import { IconLayoutSidebar } from "@tabler/icons";
+import { IconLayoutSidebar } from "@tabler/icons-react";
 
 interface PageNavToggleProps {
     open: boolean;

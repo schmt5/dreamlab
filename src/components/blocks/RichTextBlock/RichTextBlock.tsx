@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, createStyles, Divider, Transition } from '@mantine/core';
+import { Box, createStyles, Divider } from '@mantine/core';
 import { RichTextEditor, Link } from '@mantine/tiptap';
 import { JSONContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -46,8 +46,8 @@ export const RichTextBlock = ({ id, editorContent, editable = true }: RichTextBl
 
     const editor = useEditor({
         extensions: [
-            StarterKit,
             Link,
+            StarterKit,
         ],
         content: content,
         onUpdate: ({ editor }) => {
@@ -71,6 +71,12 @@ export const RichTextBlock = ({ id, editorContent, editable = true }: RichTextBl
         >
             <Box sx={{ height: 43 }}>
                 <RichTextEditor.Toolbar sticky>
+                    <RichTextEditor.ControlsGroup>
+                        <RichTextEditor.H1 />
+                        <RichTextEditor.H2 />
+                        <RichTextEditor.H3 />
+                    </RichTextEditor.ControlsGroup>
+                    <Divider orientation="vertical" />
                     <RichTextEditor.ControlsGroup>
                         <RichTextEditor.Bold />
                         <RichTextEditor.Italic />

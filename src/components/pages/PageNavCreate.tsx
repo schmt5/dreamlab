@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ActionIcon, Box, Button, Center, Flex, Text, Tooltip } from "@mantine/core";
-import { IconPlus } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons-react";
 import { CreatePageDrawer } from "./CreatePageDrawer";
 
 interface PageNavCreateProps {

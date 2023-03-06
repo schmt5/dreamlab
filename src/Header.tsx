@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Container, createStyles, Flex, Group, Header as MantineHeader, Menu, Text, UnstyledButton } from '@mantine/core';
-import { IconChevronDown, IconHeart, IconStar, IconMessage, IconSettings, IconSwitchHorizontal, IconLogout, IconUser } from '@tabler/icons';
+import { IconChevronDown, IconHeart, IconStar, IconMessage, IconSettings, IconSwitchHorizontal, IconLogout, IconUser } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
@@ -62,7 +62,6 @@ export const Header = () => {
                     <Menu
                         width={260}
                         position="bottom-end"
-                        transition="pop-top-right"
                         onClose={() => setUserMenuOpened(false)}
                         onOpen={() => setUserMenuOpened(true)}
                     >

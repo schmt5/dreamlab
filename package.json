@@ -10,22 +10,16 @@
   "dependencies": {
     "@8base/auth": "^1.6.2",
     "@emotion/react": "^11.10.5",
-    "@mantine/core": "^5.10.1",
-    "@mantine/hooks": "^5.10.1",
-    "@mantine/tiptap": "^5.10.1",
-    "@tabler/icons": "^1.119.0",
-    "@tiptap/extension-link": "^2.0.0-beta.209",
-    "@tiptap/react": "^2.0.0-beta.209",
-    "@tiptap/starter-kit": "^2.0.0-beta.209",
+    "@mantine/core": "^6.0.0",
+    "@mantine/hooks": "^6.0.0",
+    "@mantine/tiptap": "^6.0.0",
+    "@tabler/icons-react": "^2.7.0",
+    "@tiptap/extension-link": "^2.0.0-beta.220",
+    "@tiptap/pm": "^2.0.0-beta.220",
+    "@tiptap/react": "^2.0.0-beta.220",
+    "@tiptap/starter-kit": "^2.0.0-beta.220",
     "@urql/exchange-graphcache": "^5.0.8",
     "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.6",
-    "prosemirror-commands": "^1.5.0",
-    "prosemirror-dropcursor": "^1.6.1",
-    "prosemirror-gapcursor": "^1.3.1",
-    "prosemirror-history": "^1.3.0",
-    "prosemirror-keymap": "^1.2.0",
-    "prosemirror-schema-list": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.0",
@@ -42,10 +36,5 @@
     "ts-node": "^10.9.1",
     "typescript": "^4.9.5",
     "vite": "^4.0.4"
-  },
-  "overrides": {
-    "graphql-prettier": {
-      "graphql": ">=15.0.0"
-    }
   }
 }

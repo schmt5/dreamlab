@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ActionIcon, Button, Flex, Menu, Title } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons";
+import { IconChevronDown } from "@tabler/icons-react";
 import { CreateBlockDrawer } from "../CreateBlockDrawer";
 import { useParams } from "react-router-dom";
 import { useQuery } from "urql";
@@ -8,14 +8,14 @@ import { PageByIdQuery } from "../../urql/queries/pageByIdQuery";
 
 export const PageHeader = () => {
     const { pageId } = useParams();
-    const [{ data }] = useQuery({ query: PageByIdQuery, variables: { id: pageId } })
+    const [{ data }] = useQuery({ query: PageByIdQuery, variables: { id: pageId! } })
     const [blockToCreate, setBlockToCreate] = useState<'' | 'richtext' | 'checkbox'>('');
 
     return (
         <>
             <Flex justify={'space-between'} align={'center'} mb={'lg'}>
                 <Title order={2} mb={'lg'}>
-                    {data?.page.name}
+                    {data?.page?.name}
                 </Title>
                 <Flex>
                     <Button

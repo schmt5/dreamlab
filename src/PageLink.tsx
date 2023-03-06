@@ -1,9 +1,9 @@
-import { createStyles, Text, Tooltip } from "@mantine/core";
-import { IconFile } from "@tabler/icons";
+import { createStyles, getStylesRef, Text, Tooltip } from "@mantine/core";
+import { IconFile } from "@tabler/icons-react";
 import { Link, useParams } from "react-router-dom";
 
-const useStyles = createStyles((theme, _params, getRef) => {
-    const icon = getRef('icon') as any;
+const useStyles = createStyles((theme) => {
+    const icon = getStylesRef ('icon') as any;
     return {
         link: {
             ...theme.fn.focusStyles(),

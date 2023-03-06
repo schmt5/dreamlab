@@ -1,5 +1,5 @@
 import { ActionIcon, Button, Card, Flex, TextInput, Title, useMantineTheme } from '@mantine/core';
-import { IconArrowRight, IconSearch } from '@tabler/icons';
+import { IconArrowRight, IconSearch } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 export const CourseFilterForm = () => {
