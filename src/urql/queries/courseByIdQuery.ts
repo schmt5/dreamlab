@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { graphql } from '../../gql'
 
-export const CourseByIdQuery = gql`
+export const CourseByIdQuery = graphql(/* GraphQL */ `
    query CourseByIdQuery($id: ID!)  {
         course(id: $id) {
             id
@@ -15,4 +15,4 @@ export const CourseByIdQuery = gql`
             }
         }
     }
-`;
+`);

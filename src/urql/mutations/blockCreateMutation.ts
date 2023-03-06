@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { graphql } from '../../gql'
 
-export const BlockCreateMutation = gql`
+export const BlockCreateMutation = graphql(/* GraphQL */ `
     mutation BlockCreateMutation($data: BlockCreateInput!) {
         blockCreate(data: $data) {
             id
@@ -8,4 +8,4 @@ export const BlockCreateMutation = gql`
             canStudentEdit
         }
     }
-`;
+`);

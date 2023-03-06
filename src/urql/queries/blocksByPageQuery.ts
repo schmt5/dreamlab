@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { graphql } from '../../gql'
 
-export const BlocksByPageQuery = gql`
+export const BlocksByPageQuery = graphql(/* GraphQL */ `
     query BlocksByPageQuery($pageId: String!) {
         blocksList(filter: { pagesId: { equals: $pageId } }) {
             __typename
@@ -13,4 +13,4 @@ export const BlocksByPageQuery = gql`
             }
         }
     }
-`;
+`);

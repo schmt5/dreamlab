@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { graphql } from '../../gql'
 
-export const PagesByCourseQuery = gql`
+export const PagesByCourseQuery = graphql(/* GraphQL */ `
     query PagesByCourseQuery($courseId: String!) {
         pagesList(filter: { coursesId: { equals: $courseId } }) {
             __typename
@@ -11,4 +11,4 @@ export const PagesByCourseQuery = gql`
             }
         }
     }
-`;
+`);

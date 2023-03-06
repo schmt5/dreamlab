@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { graphql } from '../../gql'
 
-export const CoursesQuery = gql`
+export const CoursesQuery = graphql(/* GraphQL */ `
     query CoursesQuery {
         coursesList {
             __typename
@@ -10,4 +10,4 @@ export const CoursesQuery = gql`
             }
         }
     }
-`;
+`);

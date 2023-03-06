@@ -52,7 +52,7 @@ export const RichTextBlock = ({ id, editorContent, editable = true }: RichTextBl
         content: content,
         onUpdate: ({ editor }) => {
             setContent(editor.getJSON());
-        }
+        },
     });
 
     useEffect(() => {
