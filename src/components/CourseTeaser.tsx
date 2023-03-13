@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 const useStyles = createStyles((theme) => ({
     card: {
         '&:hover': {
-            boxShadow: theme.shadows.xs,
-            borderColor: theme.primaryColor,
+            boxShadow: theme.shadows.sm,
         },
     }
 }));
@@ -31,7 +30,7 @@ export const CourseTeaser = ({ id, name }: CourseTeaserProps) => {
             <Flex justify={'flex-end'}>
                 <Button
                     component={Link}
-                    to={`/courses/${id}`}
+                    to={`courses/${id}`}
                     variant="subtle"
                     mt={'md'}
                 >

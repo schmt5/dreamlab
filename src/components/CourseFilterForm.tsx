@@ -19,7 +19,7 @@ export const CourseFilterForm = () => {
                     component={Link}
                     to={'/courses/new'}
                     variant="gradient"
-                    gradient={{ from: 'pink', to: 'orange' }}
+                    gradient={{ from: 'indigo', to: 'grape' }}
                 >
                     Erstellen
                 </Button>

@@ -1,32 +1,30 @@
 import { Button, Flex, Switch, Title } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import { useMutation, useQuery } from "urql";
-import { BlockCreateMutation } from "../urql/mutations/blockCreateMutation";
-import { BlocksByPageQuery } from "../urql/queries/blocksByPageQuery";
+import { useMutation } from "urql";
+import { BlockUpdateMutationDocument } from "../../../gql/graphql";
 
 type FormValues = {
     canStudentEdit: boolean;
 }
 
-interface CreateRichTextBlockProps {
+interface Props {
+    id: string;
+    canStudentEdit: boolean;
     onClose: () => void;
 }
 
-export const CreateRichTextBlock = ({ onClose }: CreateRichTextBlockProps) => {
-    const { pageId } = useParams();
-    const [{ data: blocksData }] = useQuery({ query: BlocksByPageQuery, variables: { pageId } })
-    const [{ fetching }, createBlock] = useMutation(BlockCreateMutation)
+export const UpdateForm = ({ id, canStudentEdit, onClose }: Props) => {
+    const [{ fetching }, updateBlock] = useMutation(BlockUpdateMutationDocument);
     const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
-            canStudentEdit: false,
+            canStudentEdit: canStudentEdit,
         },
     });
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
-        const blockData = { data: { pagesId: pageId, position: blocksData?.blocksList.count, ...data } }
-        const newBlock = await createBlock(blockData);
-        if (!newBlock.data) return;
+        const blockData = { data: { id, canStudentEdit: data.canStudentEdit } };
+        const res = await updateBlock(blockData);
+        if (!res.data) return;
 
         onClose();
     }
@@ -55,7 +53,7 @@ export const CreateRichTextBlock = ({ onClose }: CreateRichTextBlockProps) => {
                     variant="filled"
                     loading={fetching}
                 >
-                    Hinzufügen
+                    Speichern
                 </Button>
             </Flex>
         </form>

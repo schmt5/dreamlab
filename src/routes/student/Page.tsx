@@ -1,12 +1,12 @@
 import { Loader } from "@mantine/core";
 import { Suspense } from "react";
-import { BlockList } from "../blocks/BlockList";
+import { PageWrapper } from "../../components/student/pages/PageWrapper";
 
-export const PageBody = () => {
+export default function Page() {
 
     return (
         <Suspense fallback={<Loader />}>
-            <BlockList />
+            <PageWrapper />
         </Suspense>
     );
 }

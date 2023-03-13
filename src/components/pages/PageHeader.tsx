@@ -1,26 +1,36 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { ActionIcon, Button, Flex, Menu, Title } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
-import { CreateBlockDrawer } from "../CreateBlockDrawer";
+import { BlockMutationDrawer } from "../blocks/BlockMutationDrawer";
 import { useParams } from "react-router-dom";
 import { useQuery } from "urql";
 import { PageByIdQuery } from "../../urql/queries/pageByIdQuery";
+import { ActionType, BlockMutationDispatchContext } from "../../context/BlockContext";
 
 export const PageHeader = () => {
     const { pageId } = useParams();
-    const [{ data }] = useQuery({ query: PageByIdQuery, variables: { id: pageId! } })
-    const [blockToCreate, setBlockToCreate] = useState<'' | 'richtext' | 'checkbox'>('');
+    const dispatch = useContext(BlockMutationDispatchContext);
+    const [{ data }] = useQuery({ query: PageByIdQuery, variables: { id: pageId! } });
+
+    const handleDispatch = (actionType: ActionType) => {
+        if (dispatch) {
+            dispatch({
+                type: actionType,
+                payload: null,
+            });
+        }
+    }
 
     return (
         <>
-            <Flex justify={'space-between'} align={'center'} mb={'lg'}>
+            <Flex justify={'space-between'} align={'center'} mb={36}>
                 <Title order={2} mb={'lg'}>
                     {data?.page?.name}
                 </Title>
                 <Flex>
                     <Button
                         sx={{ borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
-                        onClick={() => setBlockToCreate('richtext')}
+                        onClick={() => handleDispatch('CREATE_RICHTEXT')}
                     >
                         Einfügen
                     </Button>
@@ -29,24 +39,21 @@ export const PageHeader = () => {
                             <ActionIcon
                                 variant="filled"
                                 size={36}
-                                color="pink"
-                                sx={theme => ({ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, borderLeftColor: theme.colors.pink[3] })}
+                                color="indigo"
+                                sx={theme => ({ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, borderLeftColor: theme.colors.indigo[3] })}
                             >
                                 <IconChevronDown />
                             </ActionIcon>
                         </Menu.Target>
                         <Menu.Dropdown>
                             <Menu.Label>Blöcke</Menu.Label>
-                            <Menu.Item onClick={() => setBlockToCreate('richtext')}>RichText-Editor</Menu.Item>
+                            <Menu.Item onClick={() => handleDispatch('CREATE_RICHTEXT')}>RichText-Editor</Menu.Item>
                             <Menu.Item>Checkbox</Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
                 </Flex>
             </Flex>
-            <CreateBlockDrawer
-                blockToCreate={blockToCreate}
-                onClose={() => setBlockToCreate('')}
-            />
+            <BlockMutationDrawer />
         </>
     );
 }

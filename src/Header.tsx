@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import { Container, createStyles, Flex, Group, Header as MantineHeader, Menu, Text, UnstyledButton } from '@mantine/core';
-import { IconChevronDown, IconHeart, IconStar, IconMessage, IconSettings, IconSwitchHorizontal, IconLogout, IconUser } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+import { Button, Container, createStyles, Flex, Header as MantineHeader, Menu, Text } from '@mantine/core';
+import { IconMessage, IconSettings, IconSwitchHorizontal, IconLogout, IconSchool } from '@tabler/icons-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     header: {
@@ -44,8 +43,12 @@ const useStyles = createStyles((theme) => ({
 
 
 export const Header = () => {
-    const [userMenuOpened, setUserMenuOpened] = useState(false)
-    const { classes, theme, cx } = useStyles();
+    const navigate = useNavigate();
+    const { theme } = useStyles();
+
+    const handleStudentView = () => {
+        navigate('/student');
+    }
 
     return (
         <MantineHeader height={60} withBorder={false} style={{ backgroundColor: theme.colors.gray[0] }}>
@@ -62,39 +65,37 @@ export const Header = () => {
                     <Menu
                         width={260}
                         position="bottom-end"
-                        onClose={() => setUserMenuOpened(false)}
-                        onOpen={() => setUserMenuOpened(true)}
+
                     >
                         <Menu.Target>
-                            <UnstyledButton
-                                className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
+                            <Button
+                                color={'gray'}
+                                style={{ borderRadius: 99, width: 44, height: 44, padding: 4 }}
                             >
-                                <Group spacing={7}>
-                                    <IconUser />
-                                    <Text weight={600} size="sm" sx={{ lineHeight: 1 }} mr={3}>
-                                        {'Tiri'}
-                                    </Text>
-                                    <IconChevronDown size={12} stroke={1.5} />
-                                </Group>
-                            </UnstyledButton>
+                                TS
+                            </Button>
                         </Menu.Target>
                         <Menu.Dropdown>
-                            <Menu.Item icon={<IconHeart size={14} color={theme.colors.red[6]} stroke={1.5} />}>
-                                Liked posts
+                            <Menu.Item icon={<IconMessage size={14} color={theme.colors.yellow[6]} stroke={1.5} />}>
+                                Nachrichten
                             </Menu.Item>
-                            <Menu.Item icon={<IconStar size={14} color={theme.colors.yellow[6]} stroke={1.5} />}>
-                                Saved posts
-                            </Menu.Item>
-                            <Menu.Item icon={<IconMessage size={14} color={theme.colors.blue[6]} stroke={1.5} />}>
-                                Your comments
+                            <Menu.Item
+                                icon={<IconSchool size={14} stroke={1.5} color={theme.colors.blue[6]} />}
+                                onClick={handleStudentView}
+                            >
+                                SuS-Ansicht
                             </Menu.Item>
 
                             <Menu.Label>Settings</Menu.Label>
-                            <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>Account settings</Menu.Item>
+                            <Menu.Item icon={<IconSettings size={14} stroke={1.5} />}>
+                                Account settings
+                            </Menu.Item>
                             <Menu.Item icon={<IconSwitchHorizontal size={14} stroke={1.5} />}>
                                 Change account
                             </Menu.Item>
-                            <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>Logout</Menu.Item>
+                            <Menu.Item icon={<IconLogout size={14} stroke={1.5} />}>
+                                Logout
+                            </Menu.Item>
                         </Menu.Dropdown>
                     </Menu>
                 </Flex>
