@@ -1,9 +1,9 @@
-import { createStyles, getStylesRef, Text, Tooltip } from "@mantine/core";
+import { createStyles, getStylesRef, Text, Tooltip, Transition } from "@mantine/core";
 import { IconFile } from "@tabler/icons-react";
 import { Link, useParams } from "react-router-dom";
 
 const useStyles = createStyles((theme) => {
-    const icon = getStylesRef ('icon') as any;
+    const icon = getStylesRef('icon') as any;
     return {
         link: {
             ...theme.fn.focusStyles(),
@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => {
             gap: theme.spacing.sm,
             textDecoration: 'none',
             color: theme.colors.gray[7],
-            padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+            padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
             borderRadius: theme.radius.sm,
             fontWeight: 500,
 
@@ -52,22 +52,31 @@ export const PageLink = ({ id, name, isSidebarOpen }: PageLinkProps) => {
     const { courseId, pageId: currentPageId } = useParams();
     const { classes, cx } = useStyles();
 
-    return (
-        <Tooltip
-            label={name}
-            position="right"
-            transitionDuration={0}
-            opened={isSidebarOpen ? false : undefined}
+    const IconLink = <Tooltip
+        label={name}
+        position="right"
+    >
+        <Link
+            to={`/courses/${courseId}/pages/${id}`}
+            className={cx(classes.link, { [classes.linkActive]: id === currentPageId })}
         >
-            <Link
-                to={`/courses/${courseId}/pages/${id}`}
-                className={cx(classes.link, { [classes.linkActive]: id === currentPageId })}
-            >
-                <IconFile className={classes.linkIcon} />
-                <Text sx={{ display: isSidebarOpen ? undefined : 'none', whiteSpace: 'nowrap' }}>
-                    {name}
-                </Text>
-            </Link>
-        </Tooltip>
+            <IconFile className={classes.linkIcon} />
+        </Link>
+    </Tooltip>
+
+    const TextLink = <Link
+        to={`/courses/${courseId}/pages/${id}`}
+        className={cx(classes.link, { [classes.linkActive]: id === currentPageId })}
+    >
+        <IconFile className={classes.linkIcon} />
+        <Text sx={{ whiteSpace: 'nowrap' }}>
+            {name}
+        </Text>
+    </Link>
+
+    return (
+        <>
+            {isSidebarOpen ? TextLink : IconLink}
+        </>
     );
 };
